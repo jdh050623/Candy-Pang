@@ -59,6 +59,7 @@
     <Compile Include="Assets\Script\Board.cs" />
     <Compile Include="Assets\Script\Dot.cs" />
     <Compile Include="Assets\Script\BackgroundTile.cs" />
+    <Compile Include="Assets\Script\FindMatches.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
