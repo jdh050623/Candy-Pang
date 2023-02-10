@@ -58,8 +58,8 @@
   <ItemGroup>
     <Compile Include="Assets\Script\Board.cs" />
     <Compile Include="Assets\Script\Dot.cs" />
-    <Compile Include="Assets\Script\BackgroundTile.cs" />
     <Compile Include="Assets\Script\FindMatches.cs" />
+    <Compile Include="Assets\Script\BackgroundTile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
