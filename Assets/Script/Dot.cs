@@ -15,6 +15,7 @@ public class Dot : MonoBehaviour
 
     private HintManager hintManager;
     private FindMatches findMatches;
+    private TopUIManager topUIManager;
     private Board board;
     public GameObject otherDot;
     private Vector2 firstTouchPosition;
@@ -38,7 +39,6 @@ public class Dot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         isColumnBomb = false;
         isRowBomb = false;
         isColorBomb = false;
@@ -47,6 +47,7 @@ public class Dot : MonoBehaviour
         hintManager = FindObjectOfType<HintManager>();
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
+        topUIManager = FindObjectOfType<TopUIManager>();
         /*targetX = (int)transform.position.x;
         targetY = (int)transform.position.y;
         row = targetY;
@@ -170,11 +171,15 @@ public class Dot : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (board.currentState == GameState.move)
+        if(topUIManager.gameStop == false)
         {
-            finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            CalculateAngle();
-        } 
+            if (board.currentState == GameState.move)
+            {
+                finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                CalculateAngle();
+            }
+        }
+         
     }
 
     void CalculateAngle()

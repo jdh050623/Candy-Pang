@@ -23,13 +23,17 @@ public class Board : MonoBehaviour
     private FindMatches findMatches;
     public int basePieceValue = 20; // ------------------------------------------
     private int streakValue = 1;
-    private ScoreManager scoreManager;//-------------------------------
+    private SoundManager soundManager;
+
     public float refillDelay = 0.5f;
+    private GoalPanel goalPanel;
 
     // Start is called before the first frame update
     void Start()
     {
-        scoreManager = FindObjectOfType<ScoreManager>();
+        soundManager = FindObjectOfType<SoundManager>();
+        goalPanel = FindObjectOfType<GoalPanel>();
+
         findMatches = FindObjectOfType<FindMatches>();
         allTiles = new BackgroundTile[width, height];
         allDots = new GameObject[width, height];
@@ -50,7 +54,7 @@ public class Board : MonoBehaviour
                 {
                     dotToUse = Random.Range(0, dots.Length);
                     maxIterations++;
-                    Debug.Log(maxIterations);//몇개 다시 재생성 했는지
+                    //Debug.Log(maxIterations);//몇개 다시 재생성 했는지
                 }
                 maxIterations = 0;
 
@@ -77,7 +81,8 @@ public class Board : MonoBehaviour
             {
                 return true;
             }
-        } else if (column <= 1 || row <= 1)
+        }
+        else if (column <= 1 || row <= 1)
         {
             if (row > 1)
             {
@@ -94,8 +99,7 @@ public class Board : MonoBehaviour
                 }
             }
         }
-
-        return false;
+        return false; 
     }
 
     private bool ColumnOrRow()
@@ -208,6 +212,17 @@ public class Board : MonoBehaviour
                 CheckToMakeBombs();
             }
 
+            if(goalPanel != null)//목표---------------------------------
+            {
+                goalPanel.CompareGoal(allDots[column, row].tag.ToString());
+                goalPanel.UpdateGoals();
+                Debug.Log("d");
+            }
+            if(soundManager != null)
+            {
+                soundManager.PlayRandomDestroyNoise();
+            }
+
             GameObject particle = Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity);//이펙트 소환
             Destroy(particle, .5f);
             Destroy(allDots[column, row]);
@@ -307,7 +322,7 @@ public class Board : MonoBehaviour
         while (MatchesOnBoard())
         {
             DestroyMatches();
-            yield return new WaitForSeconds(2 * refillDelay);
+            yield return new WaitForSeconds(3 * refillDelay);
         }
         findMatches.currentMatches.Clear();
         currentDot = null;
@@ -430,9 +445,6 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                //빈공간이 아니면(주석처리 할 코드)
-                //if (!blankSpaces[i, j])
-                //{
                 //난수 선택
                 int pieceToUse = Random.Range(0, newBoard.Count);
                 
@@ -455,7 +467,6 @@ public class Board : MonoBehaviour
                 allDots[i, j] = newBoard[pieceToUse];
                 //목록에서 제거
                 newBoard.Remove(newBoard[pieceToUse]);
-                //}
             }
         }
         //여전히 교착 상태인지 확인 (교착 상태 == 움직일 블럭이 더이상 없는 것)
