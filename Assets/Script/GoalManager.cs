@@ -66,10 +66,10 @@ public class GoalManager : MonoBehaviour
                 currentGoals[i].thisText.text = "" + levelGoals[i].numberNeeded + "/" + levelGoals[i].numberNeeded;
             }
         }
-        if(goalsCompleted >= levelGoals.Length)
+        /*if(goalsCompleted >= levelGoals.Length)
         {
-            Debug.Log("ÀÌ°Ô¹¹¶÷");
-        }
+            
+        }*/
     }
 
     public void CompareGoal(string goalToCompare)

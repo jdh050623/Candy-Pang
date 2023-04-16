@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 public class TopUIManager : MonoBehaviour
 {
+    public TextMeshProUGUI topScoreText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI vitalityText;
     public TextMeshProUGUI gameOverScoreText;
@@ -58,6 +59,7 @@ public class TopUIManager : MonoBehaviour
             Time.timeScale = 0;
         }
 
+        topScoreText.text = "Top : " + maxScore + "점";
         scoreText.text = score + "점";
         vitalityText.text = "× " + vitality;
         gameOverScoreText.text = "점수 : " + score;
