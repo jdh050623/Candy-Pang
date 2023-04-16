@@ -38,17 +38,29 @@ public class TopUIManager : MonoBehaviour
         {
             vitality = 4;
         }
+        if (!PlayerPrefs.HasKey("TOP_Score"))
+        {
+            PlayerPrefs.SetInt("TOP_Score", 0);
+        }
+        else
+        {
+            maxScore = PlayerPrefs.GetInt("TOP_Score");
+        }
     }
     // stopTimer == true
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            PlayerPrefs.SetInt("TOP_Score", 0);
+        }
         Sound();
-        
 
         if (maxScore < score)
         {
             maxScore = score;
+            PlayerPrefs.SetInt("TOP_Score", maxScore);
         }
 
         if (vitality <= 0)
